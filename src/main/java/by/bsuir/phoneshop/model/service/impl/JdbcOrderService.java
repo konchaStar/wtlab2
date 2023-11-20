@@ -3,7 +3,6 @@ package by.bsuir.phoneshop.model.service.impl;
 import by.bsuir.phoneshop.model.cart.Cart;
 import by.bsuir.phoneshop.model.dao.OrderDao;
 import by.bsuir.phoneshop.model.dao.impl.JdbcOrderDao;
-import by.bsuir.phoneshop.model.dao.impl.JdbcProductDao;
 import by.bsuir.phoneshop.model.order.Order;
 import by.bsuir.phoneshop.model.service.OrderService;
 

@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ConnectionPool {
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
     private static final int MAX_SIZE = 10;
     private final List<Connection> pool = new ArrayList<>();
     private final List<Connection> usedConnections = new ArrayList<>();
@@ -42,14 +44,18 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() {
+        lock.writeLock().lock();
         Connection connection = pool
                 .remove(pool.size() - 1);
         usedConnections.add(connection);
+        lock.writeLock().unlock();
         return connection;
     }
 
     public boolean releaseConnection(Connection connection) {
+        lock.writeLock().lock();
         pool.add(connection);
+        lock.writeLock().unlock();
         return usedConnections.remove(connection);
     }
 
